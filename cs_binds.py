@@ -15,7 +15,7 @@ sys.setdefaultencoding('utf8')
 
 exec_time = datetime.datetime.now()
 
-# sixey.es for get new file if new file is on musho.org i mean yeah
+# sixey.es for get new file if new file is on sixey.es i mean yeah
 
 #
 #	config!!!!
@@ -25,7 +25,6 @@ exec_time = datetime.datetime.now()
 #
 #	ok!!!!!!!
 #
-
 
 # number of buys/talks per key, multiply this by four, that's how many aliases you inject
 max_iterations = 420
@@ -124,13 +123,11 @@ def wonk(text):
 		text = text[:where-1] + text[where:]
 	# kanske utropstecken
 	if randint(0,3) == 1:
-		text = text + "".join(["!" for h in range(randint(1,9))])
+		text = text + ("!" * randint(1,9))
 
 	return text
 
 output = []
-
-
 
 #
 #	generera vapenbinds
@@ -168,7 +165,6 @@ for i in range(max_iterations):
 		sent = sent + "alias bindknapp a" + str(i+1) + "\""
 	output.append(sent)
 
-
 #
 #	generera cheap binds
 #
@@ -187,10 +183,8 @@ for i in range(max_iterations):
 		sent = sent + ";alias cheapknapp c" + str(i+1) + "\""
 	output.append(sent)
 
-
-
 #
-#	generera markov-talk
+#	generera bullshit-talk
 #
 
 default += "bind " + key_say_nice_thing + " bindsnack\nalias bindsnack b0\n"
@@ -198,11 +192,11 @@ default += "bind " + key_say_nice_thing + " bindsnack\nalias bindsnack b0\n"
 for i in range(max_iterations):
 	whichform = randint(0,3)
 	if whichform == 0:
-		sent = wonk(wonk(wonk(sentences_a.produce(False)) + choice(" haha, hehe".split(","))));
+		sent = wonk(wonk(wonk(sentences_a.produce(False)) + choice(" haha, hehe".split(","))))
 	elif whichform == 1:
-		sent = wonk(wonk(wonk(sentences_b.produce(False)) + choice(" haha, hehe".split(","))));
+		sent = wonk(wonk(sentences_b.produce(False)) + choice(" haha, hehe".split(",")))
 	else:
-		sent = wonk(wonk(wonk(sentences_c.produce(False)) + choice(" haha, hehe".split(","))));
+		sent = wonk(wonk(sentences_c.produce(False)) + choice(" haha, hehe".split(",")))
 	
 	if i == max_iterations-1:
 		output.append("alias b" + str(i) + " \"say " + sent + ";alias bindsnack b0\"")	
@@ -218,11 +212,11 @@ default += "bind " + key_say_not_nice_thing + " evilsnack\nalias evilsnack e0\n"
 for i in range(max_iterations):
 	whichform = randint(0,3)
 	if whichform == 0:
-		sent = wonk(sentences_a.produce(False));
+		sent = wonk(sentences_a.produce(False))
 	elif whichform == 1:
-		sent = wonk(sentences_b.produce(False));
+		sent = wonk(sentences_b.produce(False))
 	else:
-		sent = wonk(sentences_c.produce(False));
+		sent = wonk(sentences_c.produce(False))
 	
 	if i == max_iterations-1:
 		output.append("alias e" + str(i) + " \"say " + sent + ";alias evilsnack e0\"")	
