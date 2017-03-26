@@ -14,10 +14,12 @@
 
 If you edit the number of things to randomize from 420 to say 1337 maybe you just need to run it once. When the buy commands cycle you'll have forgotten the previous ones? Maybe?
 * No - it resets to alias one when you restart counter strike. lame!!!!!
-Homework for next week:
+
+## Homework for next week:
 How many aliases can cs:go hold?
-Does it keep which alias we're on when you restart? Answer: NO, it resets.
-Ok thats it folks
+* We dont know
+Does it keep which alias we're on when you restart?
+* NO, it resets.
 
 ## Ok thats it folks
 
