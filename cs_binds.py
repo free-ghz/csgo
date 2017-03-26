@@ -205,9 +205,9 @@ for i in range(max_iterations):
 		sent = wonk(wonk(wonk(sentences_c.produce(False)) + choice(" haha, hehe".split(","))));
 	
 	if i == max_iterations-1:
-		output.append("alias b" + str(i) + " \"say " + sent + ";alias evilsnack b0\"")	
+		output.append("alias b" + str(i) + " \"say " + sent + ";alias bindsnack b0\"")	
 	else:
-		output.append("alias b" + str(i) + " \"say " + sent + ";alias evilsnack b"+ str(i+1) + "\"")
+		output.append("alias b" + str(i) + " \"say " + sent + ";alias bindsnack b"+ str(i+1) + "\"")
 
 #
 #	generera ~evil  talk
