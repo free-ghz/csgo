@@ -18,6 +18,7 @@ If you edit the number of things to randomize from 420 to say 1337 maybe you jus
 ## Homework for next week:
 How many aliases can cs:go hold?
 * We dont know
+
 Does it keep which alias we're on when you restart?
 * NO, it resets.
 
