@@ -87,3 +87,11 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# ok dessa fuckers ska inte vara med
+old/
+cs_binds.zip
+*.pyc
+sentences_export.py
+test.py
+tf2.txt
