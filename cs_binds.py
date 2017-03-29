@@ -8,6 +8,7 @@ import string
 import sentences_a
 import sentences_b
 import sentences_c
+import names
 import datetime
 import sys
 reload(sys)  
@@ -28,6 +29,9 @@ exec_time = datetime.datetime.now()
 
 # number of buys/talks per key, multiply this by four, that's how many aliases you inject
 max_iterations = 420
+
+# amount of name suggestions
+no_suggestions = 7
 
 # where to save the shit to, i like autoexec, you could choose whatever
 file_path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\cfg\\autoexec.cfg"
@@ -54,21 +58,26 @@ bind f3 "buy vest;buy ak47;buy defuser;buy vesthelm"
 bind f4 "buy vest;buy mp9;buy mac10"
 
 // scout button
-bind f9 "buy ssg08;buy awp;buy vest;buy vesthelm"
+bind f9 "buy ssg08;buy vest;buy vesthelm"
 
 //ok nu är resten generated
+echo "---------------------"
 """
 
 airlines = 'echo "thank you for flying with idiot airlines! ' + str(exec_time) + '"'
+airlines += '\necho "---------------------"\n'
 default += airlines
 
+
 #
-#
-#   v2.3 (26/3 17)
+#	v2.4 (29/3 17)
+#		* name suggestions
+#		* bugfix but forgot what
+#	v2.3 (26/3 17)
 #		* fixed bug "sg008" --> "ssg08"
 #		* made it echo generation time so you know if it's fresh
 #		* removed the mysql thingy, fuck 40 sec generation time
-#		* f7: more trashy than f8
+#		* f7 = more trashy than f8
 #		* maybe ill put the thing on github hehe
 #	v2.2 (04/3 17)
 #		* added new generation mode -> shit requires mysql now
@@ -232,5 +241,11 @@ output.append("\n\n")
 target = open(file_path, 'w')
 target.write(default + "\n".join(output))
 target.close()
+
+#
+# 	do the names too. give som suggestione
+#
+print("here are some suggestions for names bro dude man\n")
+print(names.givefive(no_suggestions))
 
 # C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\csgo\cfg
