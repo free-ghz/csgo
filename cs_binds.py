@@ -31,7 +31,7 @@ exec_time = datetime.datetime.now()
 max_iterations = 420
 
 # amount of name suggestions
-no_suggestions = 7
+no_suggestions = 50
 
 # where to save the shit to, i like autoexec, you could choose whatever
 file_path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\cfg\\autoexec.cfg"
@@ -57,22 +57,63 @@ bind f2 "buy vest;buy defuser;buy vesthelm"
 bind f3 "buy vest;buy ak47;buy defuser;buy vesthelm"
 bind f4 "buy vest;buy mp9;buy mac10"
 
-// scout button
-bind f9 "buy ssg08;buy vest;buy vesthelm"
+// lite cool stuff
+r_drawtracers_firstperson 0
+
+// raddar
+cl_radar_always_centered "0"
+cl_radar_scale "0.3"
+cl_hud_radar_scale "1.15"
+cl_radar_icon_scale_min "1"
+cl_radar_rotate "1"
+
+// viewmodel bob
+cl_righthand "1"
+viewmodel_offset_x "0"
+viewmodel_offset_y "-2"
+viewmodel_offset_z "-2"
+viewmodel_fov "54"
+cl_bobamt_lat "0.1"
+cl_bobamt_vert "0.1"
+cl_bobcycle "0.1"
+cl_viewmodel_shift_left_amt "0.5"
+cl_viewmodel_shift_right_amt "0.5"
 
 //ok nu är resten generated
 echo "---------------------"
 """
 
-airlines = 'echo "thank you for flying with idiot airlines! ' + str(exec_time) + '"'
+# run with middle mouse
+default += """
+alias runon "+forward;alias midmouse runoff"
+alias runoff "-forward;alias midmouse runon"
+alias midmouse "runon"
+bind mouse3 midmouse
+"""
+
+p90wep = choice(["p90", "ssg08", "mp7"])
+p90 = """// p90 button
+bind f9 "buy """ + p90wep + """;buy vest;buy vesthelm"
+
++cl_show_team_equipment """
+
+default += p90
+
+airlines = 'echo " "\necho " "\necho " "\necho "thank you for flying with idiot airlines! ' + str(exec_time) + '"'
+airlines += "\necho \"you get: " + p90wep + "!\"" 
+airlines +='\necho " "\necho " "\necho " "'
 airlines += '\necho "---------------------"\n'
 default += airlines
+
+whatsay = choice(["it's time to frag", "welcome to die"])
+default += '\nsay "' + whatsay + '"'
 
 
 #
 #	v2.4 (29/3 17)
 #		* name suggestions
 #		* bugfix but forgot what
+#		* middle mouse is run now
 #	v2.3 (26/3 17)
 #		* fixed bug "sg008" --> "ssg08"
 #		* made it echo generation time so you know if it's fresh

@@ -40,10 +40,11 @@ def leet(inte):
 				jo += inte[x]
 		else:
 			jo += inte[x]
-	return jo
+	return inte #return jo
 
 # these are displayed in the cs go-font
-working_emoji = ['♠', '♥', '♦', '♣', '⌨', '✏', '✒', '✂', '☢', '☣', '↗', '↘', '↙', '↩', '☸', '☯', '✝', '☦', '☪', '☮', '♀', '♂', 'Ⓜ', '☿', '✈', '⌛', '⌚', '☀', '☁', '☂', '❄', '☄', '☎', '☠', '☝', '✌', '✍', '❤','❣', '♨']
+#♠♥♦♣⌨✏✒✂☢☣↗↘↙↩☸☯✝☦☪☮♀♂Ⓜ☿✈⌛⌚☀☁☂❄☄☎☠☝✌✍❤❣♨☭
+working_emoji = ['☭', '♠', '♥', '♦', '♣', '⌨', '✏', '✒', '✂', '☢', '☣', '↗', '↘', '↙', '↩', '☸', '☯', '✝', '☦', '☪', '☮', '♀', '♂', 'Ⓜ', '☿', '✈', '⌛', '⌚', '☀', '☁', '☂', '❄', '☄', '☎', '☠', '☝', '✌', '✍', '❤','❣', '♨']
 def decoration(inte):
 	a = choice(working_emoji)
 	if randint(0,1) == 0:
@@ -71,8 +72,6 @@ def givefive(amount_lol):
 	words = ""
 	with open("nounlist.txt") as f:
 		words += f.read() + "\n"
-	with open("svenska.txt") as f:
-		words += f.read()
 	words = words.split("\n")
 	output = ""
 	for x in xrange(amount_lol):
