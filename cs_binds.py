@@ -13,6 +13,7 @@ sys.setdefaultencoding('utf8')
 
 # where to save the shit to, i like autoexec, you could choose whatever
 file_path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\cfg\\autoexec.cfg"
+print file_path
 
 # ["key", maxCashToBuyFor]
 key1 = ["f5", 1200]
@@ -198,7 +199,7 @@ for variant in variants:
 			t = 0
 		else:
 			t = rotation+1
-		string += "alias " + variant[2] + "pointer " + str(t) + "\""
+		string += "alias " + variant[2] + "pointer " + variant[2] + str(t) + "\""
 		output.append(string)
 
 whatsay = choice(["it's time to frag", "welcome to die", "get rekt, friends", "now we play cs go", "its time to git gud", "i buy deagle every time"])
