@@ -4,58 +4,36 @@ from __future__ import division
 from random import randint
 from random import uniform
 from random import choice
-import string
-import sentences_a
-import sentences_b
-import sentences_c
-import names
-import datetime
+from pprint import pprint
 import sys
 reload(sys)  
 sys.setdefaultencoding('utf8')
 
-exec_time = datetime.datetime.now()
-
-# sixey.es for get new file if new file is on sixey.es i mean yeah
-
-#
-#	config!!!!
-#
-#	check these first so it doesnt do anything stupid!!!!!!!!!!!!!!!!!!!!!
-#
-#
-#	ok!!!!!!!
-#
-
-# number of buys/talks per key, multiply this by four, that's how many aliases you inject
-max_iterations = 420
-
-# amount of name suggestions
-no_suggestions = 50
+# config
 
 # where to save the shit to, i like autoexec, you could choose whatever
 file_path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\cfg\\autoexec.cfg"
 
-# what keys to use
-key_random_buy = "f5"
-key_random_cheap = "f6"
-key_say_nice_thing = "f7"
-key_say_not_nice_thing = "f8"
+# ["key", maxCashToBuyFor]
+key1 = ["f5", 1200]
+key2 = ["f6", 2500]
+key3 = ["f7", 4444]
+key4 = ["f8", 10000]
 
-# this should be true
-always_buy_kev = True
+chanceOfNoArmor = 0.4
 
-# this will always be written to the file. i put my regular autoexec in here.
+gunsPerKey = 100
+
 default = """
 // luki sa att jag skulle skriva denna här
 // to do with networks
 rate "687500"
 
 //ok detta är bra binds
-bind f1 "buy tec9"
-bind f2 "buy vest;buy defuser;buy vesthelm"
+bind f1 "buy vest;buy mag7;buy hegrenade";buy deagle"
+bind f2 "buy vest"
 bind f3 "buy vest;buy ak47;buy defuser;buy vesthelm"
-bind f4 "buy vest;buy mp9;buy mac10"
+bind f4 "buy vest;buy defuser;buy vesthelm"
 
 // lite cool stuff
 r_drawtracers_firstperson 0
@@ -83,33 +61,17 @@ cl_viewmodel_shift_right_amt "0.5"
 echo "---------------------"
 """
 
-# run with middle mouse
 default += """
 alias runon "+forward;alias midmouse runoff"
 alias runoff "-forward;alias midmouse runon"
 alias midmouse "runon"
 bind mouse3 midmouse
 """
-
-p90wep = choice(["p90", "ssg08", "mp7"])
-p90 = """// p90 button
-bind f9 "buy """ + p90wep + """;buy vest;buy vesthelm"
-
-+cl_show_team_equipment """
-
-default += p90
-
-airlines = 'echo " "\necho " "\necho " "\necho "thank you for flying with idiot airlines! ' + str(exec_time) + '"'
-airlines += "\necho \"you get: " + p90wep + "!\"" 
-airlines +='\necho " "\necho " "\necho " "'
-airlines += '\necho "---------------------"\n'
-default += airlines
-
-whatsay = choice(["it's time to frag", "welcome to die"])
-default += '\nsay "' + whatsay + '"'
-
-
 #
+#	v3.0 (18/11 17)
+#		* rewrite from sratch
+#		* no longer talk binds bc its not fun anymore
+#		* 
 #	v2.4 (29/3 17)
 #		* name suggestions
 #		* bugfix but forgot what
@@ -134,159 +96,114 @@ default += '\nsay "' + whatsay + '"'
 #		* now tries to buy both m4's for example
 #
 
-pistol =  ["glock; buy hkp2000","p250","elite","deagle","tec9"]
-smg =  ["xm1014","mag7","ssg08","awp","ak47","sg556;buy aug","famas; buy galilar","m4a1; buy m4a1_silencer","scar20; buy g3sg1"]
-smg_cheap  =  ["mp9;buy mac10","mp7","p90","bizon","ump45","nova","mag7","sawedoff"]
+
+output = [default]
+
 nades =  ["hegrenade","flashbang","smokegrenade","decoy","molotov","incgrenade"]
-thing =  ["defuser","vesthelm"]
-everything = [pistol, smg, nades, thing]
 
-if not always_buy_kev:
-	thing = thing + ["vest"]
+slot2 = [("p250", 300), 
+	("elite", 400), 
+	("deagle", 700), 
+	("tec9", 500)]
+slot1 = [("nova", 1200), 
+	("xm1014", 2000), 
+	("mag7/sawedoff", 1800),
+	("m249", 5200),
+	("negev", 2000),
+	("mp9/mac10", 1250),
+	("bizon", 1400),
+	("ump45", 1200),
+	("p90", 2350),
+	("famas/galilar", 2250),
+	("ak47/m4a1/m4a1_silencer", 2700),
+	("sg556/aug", 3300),
+	("ssg08", 1700),
+	("awp", 4750),
+	("scar20/g3sg1", 5000)
+]
+slot3 = [
+	("flashbang", 200),
+	("decoy", 50),
+	("smokegrenade", 300),
+	("hegrenade", 300),
+	("incgrenade/molotov", 600)
+]
 
-#
-#	funktion för att emulera dålig skrivning
-#
+key1.append("msa")
+key2.append("msb")
+key3.append("msc")
+key4.append("msd")
+variants = [key1, key2, key3, key4]
 
-def wonk(text):
-	text = text.strip()
-	# kanske lite random mellanslag
-	if randint(0,4) == 1:
-		for x in range(randint(1,2)):
-			where = randint(0,len(text))
-			text = text[:where] + " " + text[where:]
-	# kanske ett komma
-	if randint(0,8) == 1:
-		where = randint(0,len(text))
-		text = text[:where] + "," + text[where:]
-	# kanske ett apostrophy
-	if randint(0,16) == 1:
-		where = randint(0,len(text))
-		text = text[:where] + "'" + text[where:]
-	# extra letter
-	if randint(0,2) == 1:
-		where = randint(0,len(text))
-		text = text[:where] + choice(string.letters.lower()) + text[where:]
-	# remove letter
-	if randint(0,3) == 1:
-		where = randint(2,len(text))
-		text = text[:where-1] + text[where:]
-	# kanske utropstecken
-	if randint(0,3) == 1:
-		text = text + ("!" * randint(1,9))
+def buygun(guns, cash):
+		# 3.1  selection
+		possibleguns = []
+		for gun in guns:
+			if gun[1] <= cash:
+				possibleguns.append(gun)
+		if len(possibleguns) > 0:				
+			return choice(possibleguns)
+		else:
+			return None
+		# 3.2 purchasing
 
-	return text
+for variant in variants:
+	output.append("bind " + variant[0] + " " + variant[2] + "pointer")
+	output.append("alias " + variant[2] + "pointer " + variant[2] + "0")
+	for rotation in xrange(gunsPerKey):
+		# 1. setup
+		string = "alias " + variant[2] + str(rotation) + " \""
+		cash = variant[1]
+		# 2. protection
+		if (uniform(0,1) > chanceOfNoArmor):
+			string += "buy vest;"
+			cash -= 600
+		# buy slot 1
+		gun = buygun(slot1, cash)
+		if gun != None:
+			cash -= gun[1]
+			if ("/" in gun[0]):
+				t = gun[0].split("/")
+				for g in t:
+					string += "buy " + g + ";"
+			else:
+				string += "buy " + gun[0] + ";"
+		# buy slot 2
+		gun = buygun(slot2, cash)
+		if gun != None:
+			cash -= gun[1]
+			if ("/" in gun[0]):
+				t = gun[0].split("/")
+				for g in t:
+					string += "buy " + g + ";"
+			else:
+				string += "buy " + gun[0] + ";"
 
-output = []
+		# buy grenades?
+		for f in xrange(3):
+			temp = slot3[:]
+			gun = buygun(temp, cash)
+			if gun != None:
+				temp.remove(gun)
+				cash -= gun[1]
+				if ("/" in gun[0]):
+					t = gun[0].split("/")
+					for g in t:
+						string += "buy " + g + ";"
+				else:
+					string += "buy " + gun[0] + ";"
 
-#
-#	generera vapenbinds
-#
+		# finish up
+		if rotation == gunsPerKey-1:
+			t = 0
+		else:
+			t = rotation+1
+		string += "alias " + variant[2] + "pointer " + str(t) + "\""
+		output.append(string)
 
-default += "\nbind " + key_random_buy + " bindknapp\nalias bindknapp a0\n"
-
-for i in range(max_iterations):
-	# maybe a big gun (2/3)
-	slot1 = randint(0,3)
-	# if a big gun, maybe a small. if no big, always a small gun
-	if slot1 > 0:
-		slot2 = randint(0,2)
-	else:
-		slot2 = 1
-	# amount of grenades
-	slot3 = choice([0,0,0,0,1,1,1,2,3])
-
-	#ok make gun
-	# vest > pistol > cool gun > etc
-	sent = "alias a" + str(i) + " \""
-	if always_buy_kev:
-		sent += "buy vest;"
-	if slot2 > 0:
-		sent = sent + "buy " + choice(pistol) + ";"
-	if slot1 > 0:
-		sent = sent + "buy " + choice(smg) + ";"
-	for x in range(slot3):
-		sent = sent + "buy " + choice(nades) + ";"
-	# alltid bra va
-	sent = sent + "buy defuser;buy vesthelm;"
-	if i == max_iterations-1:
-		sent = sent + "alias bindknapp a0\""
-	else:
-		sent = sent + "alias bindknapp a" + str(i+1) + "\""
-	output.append(sent)
-
-#
-#	generera cheap binds
-#
-
-default += "bind " + key_random_cheap + " cheapknapp\nalias cheapknapp c0\n"
-
-for i in range(max_iterations):
-	choices = smg_cheap + pistol
-	sent = "alias c" + str(i) + " \"buy "
-	if always_buy_kev:
-		sent += "vest;buy "
-	sent += choice(choices)
-	if i == max_iterations-1:
-		sent = sent + ";alias cheapknapp c0\""
-	else:
-		sent = sent + ";alias cheapknapp c" + str(i+1) + "\""
-	output.append(sent)
-
-#
-#	generera bullshit-talk
-#
-
-default += "bind " + key_say_nice_thing + " bindsnack\nalias bindsnack b0\n"
-
-for i in range(max_iterations):
-	whichform = randint(0,3)
-	if whichform == 0:
-		sent = wonk(wonk(wonk(sentences_a.produce(False)) + choice(" haha, hehe".split(","))))
-	elif whichform == 1:
-		sent = wonk(wonk(sentences_b.produce(False)) + choice(" haha, hehe".split(",")))
-	else:
-		sent = wonk(wonk(sentences_c.produce(False)) + choice(" haha, hehe".split(",")))
-	
-	if i == max_iterations-1:
-		output.append("alias b" + str(i) + " \"say " + sent + ";alias bindsnack b0\"")	
-	else:
-		output.append("alias b" + str(i) + " \"say " + sent + ";alias bindsnack b"+ str(i+1) + "\"")
-
-#
-#	generera ~evil  talk
-#
-
-default += "bind " + key_say_not_nice_thing + " evilsnack\nalias evilsnack e0\n"
-
-for i in range(max_iterations):
-	whichform = randint(0,3)
-	if whichform == 0:
-		sent = wonk(sentences_a.produce(False))
-	elif whichform == 1:
-		sent = wonk(sentences_b.produce(False))
-	else:
-		sent = wonk(sentences_c.produce(False))
-	
-	if i == max_iterations-1:
-		output.append("alias e" + str(i) + " \"say " + sent + ";alias evilsnack e0\"")	
-	else:
-		output.append("alias e" + str(i) + " \"say " + sent + ";alias evilsnack e"+ str(i+1) + "\"")
-
-#
-#	ok thats mostly it. print to file!
-#
-
-output.append("\n\n")
+whatsay = choice(["it's time to frag", "welcome to die", "get rekt, friends", "now we play cs go", "its time to git gud", "i buy deagle every time"])
+output.append('say "' + whatsay + '"')
 
 target = open(file_path, 'w')
 target.write(default + "\n".join(output))
 target.close()
-
-#
-# 	do the names too. give som suggestione
-#
-print("here are some suggestions for names bro dude man\n")
-print(names.givefive(no_suggestions))
-
-# C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\csgo\cfg
